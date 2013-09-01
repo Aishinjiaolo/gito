@@ -20,6 +20,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'devise', '3.0.2'
 gem "seo_helper", "~> 1.0.2"
 gem "open_graph_helper"
