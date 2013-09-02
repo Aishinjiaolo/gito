@@ -1,3 +1,10 @@
 //= require_self
 //= require common
 //= require jquery.ui.all
+
+.center_image {
+  text-align: center;
+  img {
+    margin: 0 auto;
+  }
+}
