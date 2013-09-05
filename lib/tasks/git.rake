@@ -10,7 +10,7 @@ namespace :git do
     command = "cd #{git_dir}; make -i prefix=#{build_dir} NO_TCLTK=true; make install -i prefix=#{build_dir} NO_TCLTK=true"
     puts "Let't build #{git}"
     puts command
-    sh "$command"
+    sh "#{command}"
     puts "#{git} build is done"
   end
 end
