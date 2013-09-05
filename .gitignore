@@ -20,7 +20,7 @@
 public/uploads
 vendor/bundler_gems
 config/database.yml
-config/config.yml
+#config/config.yml
 
 # Ignore local git build
 vendor/git-1.8.4/build
