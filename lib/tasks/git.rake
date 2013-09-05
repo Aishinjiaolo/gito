@@ -4,6 +4,7 @@ namespace :git do
   cwd       = Rake.application.original_dir
   git_dir   = "#{cwd}/vendor/#{git}"
   build_dir = "#{cwd}/vendor/#{git}/build"
+  git_exe   = "#{build_dir}/bin/git"
 
   desc "Build Git"
   task :build do
@@ -12,5 +13,14 @@ namespace :git do
     puts command
     sh "#{command}"
     puts "#{git} build is done"
+  end
+
+  desc "Check Git Usable"
+  task :check do
+    if system("#{git_exe} --version")
+      puts "We got git installed~"
+    else
+      puts "Git is not there for executing!!"
+    end
   end
 end
