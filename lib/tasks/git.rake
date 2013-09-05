@@ -20,7 +20,7 @@ namespace :git do
     if system("#{git_exe} --version")
       puts "We got git installed~"
     else
-      puts "Git is not there for executing!!"
+      raise SystemCallError, "Git is not there for executing!!"
     end
   end
 end
