@@ -58,6 +58,8 @@ gem "hipchat"
 # Cache
 gem "dalli"
 
+gem 'rails_12factor'
+
 group :assets do
   gem "compass-rails", "~> 2.0.alpha.0"
 end
