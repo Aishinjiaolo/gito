@@ -5009,6 +5009,21 @@ ul.nav li.dropdown:hover .dropdown-menu {
 .navbar .dropdown-menu {
   margin-top: 0px; }
 
+.carousel-caption {
+  color: black; }
+
+.carousel-control {
+  color: black; }
+
+.carousel-control:hover, .carousel-control:focus {
+  color: black; }
+
+.carousel-indicators li {
+  border: 1px solid black; }
+
+.carousel-indicators .active {
+  background-color: black; }
+
 .social {
   float: left;
   width: 90px;
