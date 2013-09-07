@@ -90,6 +90,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+# Spreadsheet read/write utility
+gem 'roo'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
