@@ -9,14 +9,14 @@
       <%= link_to(Setting.app_name, Setting.domain , :class => "navbar-brand" )%>
     </div>
     <div class="navbar-collapse">
-      <%= render_list :class => "nav navbar-nav" do |li|
+      <%= render :partial => "common/user_nav"%>
+      <%= render_list :class => "nav navbar-nav pull-right" do |li|
         if not current_user.blank?
-          li << link_to("All Spreadsheet", user_spreadsheets_path)
+          li << link_to("All Spreadsheets", user_spreadsheets_path(current_user))
           li << link_to("Link-2","#")
           li << link_to("Link-3","#")
         end
       end %>  
-      <%= render :partial => "common/user_nav"%>
     </div>
   </div>
   <%= yield :submenu %>
