@@ -1,0 +1,24 @@
+<div class="span12">
+  <div class="spreadsheet pull-right">
+    <%= link_to("New Sheet", new_user_spreadsheets_path(@user) , :class => "btn btn-mini btn-primary")%>
+    &nbsp;
+  </div>
+  <h2> <%= @user.id %> </h2> <p> <%= @user.email %> </p>
+  <table class="table">
+    <tbody>
+      <% @spreadsheets.each do |sheet| %>
+        <tr>
+          <td> <%= sheet.content %> </td>
+          <td> 
+            <%= link_to("Edit", edit_user_spreadsheets_path(sheet),
+              :class => "btn btnbtn-mini btn-primary") %>
+            <%= link_to("Delete", user_spreadsheets_path(sheet),
+              :class   => "btn btnbtn-mini btn-warning",
+              :method  => :delete,
+              :confirm => "Areyousure?") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -11,9 +11,11 @@
     <%= render :partial => "common/search_form" %>
     <div class="navbar-collapse">
       <%= render_list :class => "nav navbar-nav" do |li|
-        li << link_to("Link-1","#")
-        li << link_to("Link-2","#")
-        li << link_to("Link-3","#")
+        if not current_user.blank?
+          li << link_to("All Spreadsheet", user_spreadsheets_path)
+          li << link_to("Link-2","#")
+          li << link_to("Link-3","#")
+        end
       end %>  
       <%= render :partial => "common/user_nav"%>
     </div>
