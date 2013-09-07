@@ -19,4 +19,4 @@ test:
 
 production:
   <<: *defaults
-  domain: "http://http://gito.herokuapp.com"
+  domain: "http://gito.herokuapp.com"
