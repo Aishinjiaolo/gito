@@ -13,7 +13,9 @@
         <div class="carousel-caption">
           <h1>Manage Your Orders.</h1>
           <p>you need a better platform between you and your partners</p>
-          <%= link_to( "Sign up today" ,new_user_registration_path, :class => "btn btn-large btn-primary") %>
+          <%= if current_user.blank?
+                link_to( "Sign up today" ,new_user_registration_path, :class => "btn btn-large btn-primary")
+          end %>
         </div>
       </div>
     </div>
@@ -25,7 +27,9 @@
         <div class="carousel-caption">
           <h1>Track Your Change.</h1>
           <p>All those painful changes are well tracked.</p>
-          <%= link_to( "Sign up today" ,new_user_registration_path, :class => "btn btn-large btn-primary") %>
+          <%= if current_user.blank?
+                link_to( "Sign up today" ,new_user_registration_path, :class => "btn btn-large btn-primary")
+          end %>
         </div>
       </div>
     </div>
@@ -37,7 +41,9 @@
         <div class="carousel-caption">
           <h1>Save Your Coffee Hours.</h1>
           <p>Spin up cycle time from injuiries, orders to shippments.</p>
-          <%= link_to( "Sign up today" ,new_user_registration_path, :class => "btn btn-large btn-primary") %>
+          <%= if current_user.blank?
+                link_to( "Sign up today" ,new_user_registration_path, :class => "btn btn-large btn-primary")
+          end %>
         </div>
       </div>
     </div>
