@@ -6,11 +6,11 @@
       <% end %>
 
       <%= render_list :class => "dropdown-menu" do |li|
-          li << link_to("Logout",destroy_user_session_path, :method => :delete )
+          li << link_to("Logout", destroy_user_session_path, :method => :delete )
       end %>
     </li>
   <% else %>
-    <li> <%= link_to( "Sign Up" ,new_user_registration_path) %> </li>
-    <li> <%= link_to( "Login", new_user_session_path )  %> </li>   
+    <li> <%= link_to( "Sign Up", new_user_registration_path, :class => "gray-color") %> </li>
+    <li> <%= link_to( "Login",   new_user_session_path,      :class => "gray-color") %> </li>
   <% end %>
 </ul>
