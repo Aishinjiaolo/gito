@@ -1,0 +1,25 @@
+<div class="span12">
+  <div class="sheet pull-right">
+    <%= link_to("New Sheet", new_user_sheet_path(@user) , :class => "btn btn-mini btn-primary")%>
+    &nbsp;
+  </div>
+  <h3> <%= @user.email %> </h3>
+  <p> <%= "Total #{@user.sheets.size} sheets" %> </p>
+  <table class="table">
+    <tbody>
+      <% @sheets.each do |sheet| %>
+        <tr>
+          <td> <%= link_to(sheet.content, user_sheet_path(sheet.user, sheet)) %> </td>
+          <td> 
+            <%= link_to("Edit", edit_user_sheet_path(sheet.user, sheet),
+              :class => "btn btnbtn-mini btn-primary") %>
+            <%= link_to("Delete", user_sheet_path(sheet.user, sheet),
+              :class   => "btn btnbtn-mini btn-warning",
+              :method  => :delete,
+              :confirm => "Areyousure?") %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

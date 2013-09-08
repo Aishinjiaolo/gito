@@ -1,0 +1,18 @@
+<div class="span12">
+  <div class="sheet pull-right">
+    <%= link_to("New Sheet", new_user_sheet_path(@user) , :class => "btn btn-mini btn-primary")%>
+    &nbsp;
+  </div>
+  <h3> <%= "\'#{@user.email}\' -> sheet id = \'#{@sheet.id}\'" %> </h3>
+  <div class="span12">
+    <pre> <%= @sheet.content %> </pre>
+      <div>
+        <%= link_to("Edit", edit_user_sheet_path(@sheet.user, @sheet),
+          :class => "btn btnbtn-mini btn-primary") %>
+        <%= link_to("Delete", user_sheet_path(@sheet.user, @sheet),
+          :class   => "btn btnbtn-mini btn-warning",
+          :method  => :delete,
+          :confirm => "Areyousure?") %>
+      </div>
+  </div>
+</div>

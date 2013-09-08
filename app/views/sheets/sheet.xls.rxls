@@ -1,0 +1,25 @@
+excel_document(:filename => "all_lines.xls") do |workbook|
+    sheet = workbook.create_worksheet
+    sheet.name = "What's in a name"
+
+    sheet.row(0).concat %w{Name Country Acknowlegement}
+    sheet[1,0] = 'Japan'
+    row = sheet.row(1)
+    row.push 'Creator of Ruby'
+    row.unshift 'Yukihiro Matsumoto'
+    sheet.row(2).replace [ 'Daniel J. Berger', 'U.S.A.',
+                           'Author of original code for Spreadsheet::Excel' ]
+    sheet.row(3).push 'Charles Lowe', 'Author of the ruby-ole Library'
+    sheet.row(3).insert 1, 'Unknown'
+    sheet.update_row 4, 'Hannes Wyss', 'Switzerland', 'Author'
+
+    sheet.row(0).height = 18
+
+    format = Spreadsheet::Format.new :color => :blue,
+        :weight => :bold,
+        :size => 18
+    sheet.row(0).default_format = format
+
+    bold = Spreadsheet::Format.new :weight => :bold
+    4.times do |x| sheet.row(x + 1).set_format(0, bold) end
+end
