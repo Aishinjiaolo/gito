@@ -13,8 +13,6 @@
       <%= render_list :class => "nav navbar-nav pull-right" do |li|
         if not current_user.blank?
           li << link_to("All Sheets", user_sheets_path(current_user))
-          li << link_to("Link-2","#")
-          li << link_to("Link-3","#")
         end
       end %>  
     </div>
