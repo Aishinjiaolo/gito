@@ -4,3 +4,4 @@
 //= require jquery.ui.all
 //= require twitter/bootstrap/alert
 //= require bootstrap
+//= require jquery.handsontable.full
