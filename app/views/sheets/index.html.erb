@@ -9,7 +9,7 @@
     <tbody>
       <% @sheets.each do |sheet| %>
         <tr>
-          <td> <%= link_to(sheet.content, user_sheet_path(sheet.user, sheet)) %> </td>
+          <td> <%= link_to(sheet.path, user_sheet_path(sheet.user, sheet)) %> </td>
           <td> 
             <%= link_to("Edit", edit_user_sheet_path(sheet.user, sheet),
               :class => "btn btnbtn-mini btn-primary") %>

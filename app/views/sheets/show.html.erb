@@ -5,7 +5,7 @@
   </div>
   <h3> <%= "\'#{@user.email}\' -> sheet id = \'#{@sheet.id}\'" %> </h3>
   <div class="span12">
-    <pre> <%= @sheet.content %> </pre>
+    <pre> <%= @sheet.path %> </pre>
       <div>
         <%= link_to("Edit", edit_user_sheet_path(@sheet.user, @sheet),
           :class => "btn btnbtn-mini btn-primary") %>

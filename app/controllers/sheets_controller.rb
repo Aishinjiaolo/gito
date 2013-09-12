@@ -58,6 +58,6 @@ class SheetsController < ApplicationController
   end
 
   def sheet_params
-    params.require(:sheet).permit(:content)
+    params.require(:sheet).permit(:path)
   end
 end

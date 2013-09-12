@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130908063312) do
+ActiveRecord::Schema.define(version: 20130912035810) do
 
   create_table "sheets", force: true do |t|
-    t.text     "content"
+    t.string   "path"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
