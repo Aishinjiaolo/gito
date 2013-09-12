@@ -1,0 +1,69 @@
+<script>
+$(document).ready(function() {
+  var data = <%= raw @sheetdata.to_json %>;
+  var dataTable = $("#dataTable");
+  
+  dataTable.handsontable({
+    data: data,
+    startRows: 6,
+    startCols: 8,
+    rowHeaders: true,
+    colHeaders: true,
+    manualColumnMove: true,
+    manualColumnResize: true,
+    contextMenu: true,
+    currentRowClassName: 'currentRow',
+    currentColClassName: 'currentCol',
+    persistentState: true,
+  });
+  
+  $('#search_field').on('keyup', function (event) {
+    var value = ('' + this.value).toLowerCase(), row, col, r_len, c_len, td;
+  
+    if (value) {
+      for (row = 0, r_len = data.length; row < r_len; row++) {
+        for (col = 0, c_len = data[row].length; col < c_len; col++) {
+          td = dataTable.handsontable('getCell', row, col);
+  
+          if (('' + data[row][col]).toLowerCase().indexOf(value) > -1) {
+            td.className = 'pass'
+          }
+          else {
+            td.className = '';
+          }
+        }
+      }
+    }
+  });
+
+  var $parent = dataTable.parent();
+  $parent.find('button[name=save]').click(function () {
+    $.ajax({
+      url: "save",
+      data: {"data": dataTable.data('handsontable').getData()}, //returns all cells' data
+      dataType: 'json',
+      type: 'POST',
+      success: function (res) {
+        if (res.result === 'ok') {
+          console.log('Data saved');
+        }
+        else {
+          console.log('Save error.');
+        }
+      },
+      error: function () {
+        console.log('Save error. This url is not accessable.');
+      }
+    });
+  });
+
+  function bindDumpButton() {
+    $('body').on('click', 'button[name=dump]', function () {
+      var dump = $(this).data('dump');
+      var $container = $(dump);
+      console.log('data of ' + dump, $container.handsontable('getData'));
+    });
+  }
+  bindDumpButton();
+});
+</script>
