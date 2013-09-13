@@ -34,6 +34,8 @@ gem "open_graph_helper"
 gem "rmagick"
 gem "carrierwave"
 gem "carrierwave-meta"
+gem "carrierwave_direct"
+gem "fog", "~> 1.3.1"
 
 gem "settingslogic"
 

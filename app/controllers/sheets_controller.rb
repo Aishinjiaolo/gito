@@ -12,6 +12,9 @@ class SheetsController < ApplicationController
 
   def show
     @sheet = find_sheet
+    @uploader = @sheet.sheetdata
+    @uploader.success_action_redirect = user_sheet_path
+    #@uploader.update_attribute :key, params[:key]
     @sheetdata =
       [
         ["", "Kia", "Nissan", "Toyota", "Honda"],

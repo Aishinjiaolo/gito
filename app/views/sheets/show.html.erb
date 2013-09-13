@@ -31,4 +31,9 @@
   <button name="save"  title="save current data into tmp folder">
     Save data to tmp
   </button>
+
+  <%= direct_upload_form_for @uploader do |f| %>
+    <%= f.file_field :sheetdata %>
+    <%= f.submit %>
+  <% end %>
 </div>
