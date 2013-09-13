@@ -1,0 +1,4 @@
+  <%= direct_upload_form_for @uploader do |f| %>
+    <%= f.file_field :sheetdata %>
+    <%= f.submit "Upload", :class => "btn btn-mini btn-primary" %>
+  <% end %>

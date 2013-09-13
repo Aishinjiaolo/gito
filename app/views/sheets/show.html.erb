@@ -4,13 +4,14 @@
     &nbsp;
   </div>
   <h3> <%= "\'#{@user.email}\' -> sheet id = \'#{@sheet.id}\'" %> </h3>
+  <h3> <%= "\'#{@sheet.sheetdata}\'" %> </h3>
   <div class="span12">
     <pre> <%= @sheet.path %> </pre>
       <div>
         <%= link_to("Edit", edit_user_sheet_path(@sheet.user, @sheet),
-          :class => "btn btnbtn-mini btn-primary") %>
+          :class => "btn btn-mini btn-primary") %>
         <%= link_to("Delete", user_sheet_path(@sheet.user, @sheet),
-          :class   => "btn btnbtn-mini btn-warning",
+          :class   => "btn btn-mini btn-warning",
           :method  => :delete,
           :confirm => "Areyousure?") %>
       </div>
@@ -31,9 +32,7 @@
   <button name="save"  title="save current data into tmp folder">
     Save data to tmp
   </button>
-
-  <%= direct_upload_form_for @uploader do |f| %>
-    <%= f.file_field :sheetdata %>
-    <%= f.submit %>
-  <% end %>
+  
+  <%= link_to("Upload", upload_user_sheet_path(@sheet.user, @sheet),
+    :class => "btn btn-mini btn-primary") %>
 </div>

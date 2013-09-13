@@ -7,6 +7,8 @@ CarrierWave.configure do |config|
   }
   config.fog_directory  = 'gito_user_repo'
   config.fog_public     = false
+
+  config.validate_unique_filename = false
   # see https://github.com/jnicklas/carrierwave#using-amazon-s3
   # for more optional configuration
 end

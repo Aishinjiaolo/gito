@@ -12,9 +12,6 @@ class SheetsController < ApplicationController
 
   def show
     @sheet = find_sheet
-    @uploader = @sheet.sheetdata
-    @uploader.success_action_redirect = user_sheet_path
-    #@uploader.update_attribute :key, params[:key]
     @sheetdata =
       [
         ["", "Kia", "Nissan", "Toyota", "Honda"],
@@ -32,7 +29,7 @@ class SheetsController < ApplicationController
     @sheet = @user.sheets.new(sheet_params)
 
     if @sheet.save
-      redirect_to user_sheets_path(@user)
+      redirect_to user_sheets_path
     else
       render :new
     end
@@ -60,6 +57,12 @@ class SheetsController < ApplicationController
     redirect_to user_sheets_path
   end
 
+  def upload
+    @sheet = find_sheet
+    @uploader = @sheet.sheetdata
+    @uploader.success_action_redirect = edit_user_sheet_url
+  end
+
 
   private
 
@@ -72,6 +75,6 @@ class SheetsController < ApplicationController
   end
 
   def sheet_params
-    params.require(:sheet).permit(:path)
+    params.require(:sheet).permit(:path, :sheetdata)
   end
 end
