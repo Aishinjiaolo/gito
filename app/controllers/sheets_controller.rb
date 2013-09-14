@@ -12,6 +12,8 @@ class SheetsController < ApplicationController
 
   def show
     @sheet = find_sheet
+    @load_url = "#{@sheet.id}/load"
+    @save_url = "#{@sheet.id}/save"
     @sheetdata =
       [
         ["", "Kia", "Nissan", "Toyota", "Honda"],
@@ -66,6 +68,28 @@ class SheetsController < ApplicationController
       @sheet.update(:path => params[:key])
       redirect_to user_sheet_path
     end
+  end
+
+  def load
+    @sheetdata =
+      [
+        ["", "Kia", "Nissan", "Toyota", "Honda"],
+        ["20080", 10, 11, 12, 13],
+        ["20090", 20, 11, 14, 13],
+        ["20100", 30, 15, 12, 13],
+        ["20100", 30, 15, 12, 13],
+        ["20100", 30, 15, 12, 13],
+        ["20100", 30, 15, 12, 13],
+        ["20100", 30, 15, 12, 13],
+      ]
+    data = {"data" => @sheetdata}
+    respond_to do |format|
+      format.json  { render :json => data }
+    end
+  end
+
+  def save
+    @sheetdata = params['data']
   end
 
 

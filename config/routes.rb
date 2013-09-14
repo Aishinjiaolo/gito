@@ -4,6 +4,8 @@ Gito::Application.routes.draw do
   resources :users do
     resources :sheets do
       get   'upload', on: :member
+      get   'load',   on: :member
+      post  'save',   on: :member
     end
   end
 

@@ -25,13 +25,16 @@
 
   <%= render :partial => "showtable_js" %>
 
-  <button name="dump" data-dump="#dataTable" title="Prints current data source to Firebug/Chrome Dev Tools">
+  <button name="dump" data-dump="#dataTable" class="btn btn-mini btn-primary" title="Prints current data source to Firebug/Chrome Dev Tools">
     Dump data to console
   </button>
-  <button name="save"  title="save current data into tmp folder">
-    Save data to tmp
+  <button name="save" class="btn btn-mini btn-primary" title="save current data into tmp folder">
+    Save
   </button>
-  
+  <button name="load" class="btn btn-mini btn-primary" title="load data from tmp folder">
+    Load
+  </button>
+
   <%= link_to("Upload", upload_user_sheet_path(@sheet.user, @sheet),
     :class => "btn btn-mini btn-primary") %>
 </div>

@@ -37,9 +37,25 @@ $(document).ready(function() {
   });
 
   var $parent = dataTable.parent();
+
+  $parent.find('button[name=load]').click(function () {
+    $.ajax({
+      url: <%= raw @load_url.to_json %>,
+      dataType: 'json',
+      type: 'GET',
+      success: function (res) {
+        dataTable.data('handsontable').loadData(res.data);
+        console.log('Data loaded');
+      },
+      error: function () {
+        console.log('Load error. This url is not accessable.');
+      }
+    });
+  });
+
   $parent.find('button[name=save]').click(function () {
     $.ajax({
-      url: "save",
+      url: <%= raw @save_url.to_json %>,
       data: {"data": dataTable.data('handsontable').getData()}, //returns all cells' data
       dataType: 'json',
       type: 'POST',
