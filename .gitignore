@@ -21,4 +21,4 @@ public/uploads
 vendor/bundler_gems
 config/database.yml
 #config/config.yml
-
+config/initializers/app_env.rb

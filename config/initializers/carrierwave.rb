@@ -1,8 +1,8 @@
 CarrierWave.configure do |config|
   config.fog_credentials = {
       :provider               => 'AWS',
-      :aws_access_key_id      => 'AKIAIOYN55BWLL2PTEGQ',
-      :aws_secret_access_key  => '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',
+      :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],
+      :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],
       :region                 => 'us-west-2'
   }
   config.fog_directory  = 'gito_user_repo'
