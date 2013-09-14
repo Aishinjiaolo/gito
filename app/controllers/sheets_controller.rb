@@ -89,9 +89,15 @@ class SheetsController < ApplicationController
   end
 
   def save
-    sheetdata = params[:data]
-    Rails.logger.info sheetdata
-    redirect_to user_sheet_path
+    if params[:data]
+      @sheetdata = params[:data]
+      respond_to do |format|
+        format.html  { redirect_to user_sheet_path}
+        format.json  { render :json => { result: 'ok' } }
+      end
+    else
+      redirect_to user_sheet_path
+    end
   end
 
 
