@@ -52,6 +52,7 @@ class SheetsController < ApplicationController
   def destroy
     @sheet = find_sheet
 
+    destroy_s3_file(@sheet.sheetdata)
     @sheet.destroy
 
     redirect_to user_sheets_path
@@ -60,7 +61,11 @@ class SheetsController < ApplicationController
   def upload
     @sheet = find_sheet
     @uploader = @sheet.sheetdata
-    @uploader.success_action_redirect = edit_user_sheet_url
+    @uploader.success_action_redirect = upload_user_sheet_url
+    if params[:key]
+      @sheet.update(:path => params[:key])
+      redirect_to user_sheet_path
+    end
   end
 
 
@@ -75,6 +80,13 @@ class SheetsController < ApplicationController
   end
 
   def sheet_params
-    params.require(:sheet).permit(:path, :sheetdata)
+    params.require(:sheet).permit(:path)
+  end
+
+  def destroy_s3_file(uploader)
+    s3     = AWS::S3.new
+    bucket = s3.buckets[uploader.fog_directory]
+    object = bucket.objects[@sheet.path]
+    object.delete
   end
 end
