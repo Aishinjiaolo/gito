@@ -89,7 +89,9 @@ class SheetsController < ApplicationController
   end
 
   def save
-    @sheetdata = params['data']
+    sheetdata = params[:data]
+    Rails.logger.info sheetdata
+    redirect_to user_sheet_path
   end
 
 
