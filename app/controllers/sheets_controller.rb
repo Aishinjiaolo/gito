@@ -97,7 +97,7 @@ class SheetsController < ApplicationController
       end
 
       @sheet = find_sheet
-      path = "tmp/#{@sheet.path}"
+      path = "#{Rails.root}/tmp/#{@sheet.path}"
       file = "#{path}/data.json"
       FileUtils.mkdir_p(path)
       File.open(file, 'w') do |f|
