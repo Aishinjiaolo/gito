@@ -99,6 +99,7 @@ class SheetsController < ApplicationController
       @sheet = find_sheet
       path = "#{Rails.root}/tmp/#{@sheet.path}"
       file = "#{path}/data.json"
+      puts file
       FileUtils.mkdir_p(path)
       File.open(file, 'w') do |f|
         f.write(JSON.pretty_generate(sheetdata.as_json))
