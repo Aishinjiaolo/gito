@@ -90,10 +90,18 @@ class SheetsController < ApplicationController
 
   def save
     if params[:data]
-      @sheetdata = params[:data]
+      sheetdata = params[:data]
       respond_to do |format|
-        format.html  { redirect_to user_sheet_path}
+        format.html  { redirect_to user_sheet_path }
         format.json  { render :json => { result: 'ok' } }
+      end
+
+      @sheet = find_sheet
+      path = "tmp/#{@sheet.path}"
+      file = "#{path}/data.json"
+      FileUtils.mkdir_p(path)
+      File.open(file, 'w') do |f|
+        f.write(JSON.pretty_generate(sheetdata.as_json))
       end
     else
       redirect_to user_sheet_path
