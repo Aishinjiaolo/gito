@@ -100,8 +100,19 @@ class SheetsController < ApplicationController
       path = "#{Rails.root}/tmp/#{@sheet.path}"
       file = "#{path}/data.json"
       FileUtils.mkdir_p(path)
+
       File.open(file, 'w') do |f|
         f.write(JSON.pretty_generate(sheetdata.as_json))
+      end
+
+      git = Git::init(path)
+      git.add
+
+      begin
+        message = 'message: ' + Time.now.to_s
+        git.commit_all(message)
+      rescue
+        puts 'nothing to commit'
       end
     else
       redirect_to user_sheet_path

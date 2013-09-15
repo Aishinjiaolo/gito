@@ -96,6 +96,9 @@ end
 # Spreadsheet read/write utility
 gem 'roo'
 
+# ruby-git
+gem 'git'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
