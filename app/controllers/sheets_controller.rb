@@ -119,6 +119,22 @@ class SheetsController < ApplicationController
     end
   end
 
+  def upload_s3
+    require 'find'
+    @sheet = find_sheet
+    s3     = AWS::S3.new
+    bucket = s3.buckets['gito_user_repo']
+    pre    = "#{Rails.root}/tmp/"
+    path   = "#{pre}#{@sheet.path}"
+
+    Find.find(path) do |this_path|
+      next if FileTest.directory?(this_path)
+      key = this_path.sub(pre, '')
+      object = bucket.objects[key].write(Pathname.new(this_path))
+    end
+    redirect_to user_sheet_path
+  end
+
 
   private
 

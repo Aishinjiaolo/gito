@@ -37,4 +37,6 @@
 
   <%= link_to("Upload", upload_user_sheet_path(@sheet.user, @sheet),
     :class => "btn btn-mini btn-primary") %>
+  <%= link_to("Upload S3", upload_s3_user_sheet_path(@sheet.user, @sheet),
+    :class => "btn btn-mini btn-primary") %>
 </div>

@@ -6,6 +6,7 @@ Gito::Application.routes.draw do
       get   'upload', on: :member
       get   'load',   on: :member
       post  'save',   on: :member
+      get   'upload_s3', on: :member
     end
   end
 
