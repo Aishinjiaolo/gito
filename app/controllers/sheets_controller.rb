@@ -122,6 +122,9 @@ class SheetsController < ApplicationController
   def upload_s3
     clone = "#{Rails.root}/bin/jgit clone amazon-s3://.jgit@gito_user_repo/jgit_test.git tmp/uploads/jgit_test"
     IO.popen(clone) { |result| puts result.gets }
+    g = Git.open("tmp/uploads/jgit_test", :log => Logger.new(STDOUT))
+    commits = g.log
+    commits.each { |commit| puts commit.message }
     redirect_to user_sheet_path
   end
 
