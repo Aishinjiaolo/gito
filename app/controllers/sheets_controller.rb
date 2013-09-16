@@ -120,6 +120,12 @@ class SheetsController < ApplicationController
   end
 
   def upload_s3
+    clone = "#{Rails.root}/bin/jgit clone amazon-s3://.jgit@gito_user_repo/jgit_test.git tmp/uploads/jgit_test"
+    IO.popen(clone) { |result| puts result.gets }
+    redirect_to user_sheet_path
+  end
+
+  def upload_s3_backup
     require 'find'
     @sheet = find_sheet
     s3     = AWS::S3.new
