@@ -111,7 +111,7 @@ class SheetsController < ApplicationController
         #TODO: ohmygod should be user name
         git.commit_all(message, :author => "ohmygod <#{@user.email}>")
       rescue
-        puts 'nothing to commit'
+        Rails.logger.info 'nothing to commit'
       end
     else
       redirect_to user_sheet_path
@@ -161,7 +161,7 @@ class SheetsController < ApplicationController
 
   def push(local_repo_path)
     push = "#{Rails.root}/bin/jgit --git-dir=#{local_repo_path}/.git push"
-    IO.popen(push) { |result| puts result.gets }
+    IO.popen(push) { |result| Rails.logger.info result.gets }
   end
 
   def create_local_repo
@@ -180,7 +180,7 @@ class SheetsController < ApplicationController
   def update_local_repo
     path = find_local_path
     fetch = "#{Rails.root}/bin/jgit --git-dir=#{path}/.git fetch"
-    IO.popen(fetch) { |result| puts result.gets }
+    IO.popen(fetch) { |result| Rails.logger.info result.gets }
     # TODO: do merge if any result then
     git = Git::init(path)
     git.merge('origin/master')
@@ -188,7 +188,7 @@ class SheetsController < ApplicationController
 
   def clone_s3
     clone = "#{Rails.root}/bin/jgit clone #{find_s3_url} #{find_local_path}"
-    IO.popen(clone) { |result| puts result.gets }
+    IO.popen(clone) { |result| Rails.logger.info result.gets }
   end
 
   def sheet_data_convert(json_hash)
