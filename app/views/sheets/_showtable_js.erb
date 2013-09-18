@@ -67,8 +67,10 @@ $(document).ready(function() {
           console.log('Save error.');
         }
       },
-      error: function () {
+      error: function (xhr, status, error) {
         console.log('Save error. This url is not accessable.');
+        var err = eval("(" + xhr.responseText + ")");
+        alert(err.Message);
       }
     });
   });
@@ -82,7 +84,6 @@ $(document).ready(function() {
 
     $('body').on('click', 'button[name=mypopup]', function (e) {
       e.preventDefault();
-      console.log('popup now');
       $('#hide_save').bPopup();
     });
   }
