@@ -2,6 +2,8 @@ class SheetsController < ApplicationController
   before_filter :login_required
   before_action :find_user
 
+  S3_BUCKET = 'gito_user_repo'
+
   def index
     @sheets = @user.sheets.all
   end
@@ -32,12 +34,14 @@ class SheetsController < ApplicationController
 
     if @sheet.save
       redirect_to user_sheets_path
+      create_local_repo
     else
       render :new
     end
   end
 
   def edit
+    #TODO: This won't be opened for general user in real production in the future
     @sheet = find_sheet
   end
 
@@ -53,14 +57,26 @@ class SheetsController < ApplicationController
 
   def destroy
     @sheet = find_sheet
-
-    destroy_s3_file(@sheet.sheetdata)
+    destroy_s3_object
     @sheet.destroy
-
     redirect_to user_sheets_path
   end
 
   def upload
+    @sheet = find_sheet
+    push(find_local_path)
+    @sheet.update(:path => find_upload_folder)
+    redirect_to user_sheet_path
+  end
+
+  def pull
+    @sheet = find_sheet
+    update_local_repo
+    redirect_to user_sheet_path
+  end
+
+  #TODO: for user load image maybe
+  def upload_backup
     @sheet = find_sheet
     @uploader = @sheet.sheetdata
     @uploader.success_action_redirect = upload_user_sheet_url
@@ -97,9 +113,8 @@ class SheetsController < ApplicationController
       end
 
       @sheet = find_sheet
-      path = "#{Rails.root}/tmp/#{@sheet.path}"
+      path = find_local_path
       file = "#{path}/data.json"
-      FileUtils.mkdir_p(path)
 
       File.open(file, 'w') do |f|
         f.write(JSON.pretty_generate(sheetdata.as_json))
@@ -119,31 +134,6 @@ class SheetsController < ApplicationController
     end
   end
 
-  def upload_s3
-    clone = "#{Rails.root}/bin/jgit clone amazon-s3://.jgit@gito_user_repo/jgit_test.git tmp/uploads/jgit_test"
-    IO.popen(clone) { |result| puts result.gets }
-    g = Git.open("tmp/uploads/jgit_test", :log => Logger.new(STDOUT))
-    commits = g.log
-    commits.each { |commit| puts commit.message }
-    redirect_to user_sheet_path
-  end
-
-  def upload_s3_backup
-    require 'find'
-    @sheet = find_sheet
-    s3     = AWS::S3.new
-    bucket = s3.buckets['gito_user_repo']
-    pre    = "#{Rails.root}/tmp/"
-    path   = "#{pre}#{@sheet.path}"
-
-    Find.find(path) do |this_path|
-      next if FileTest.directory?(this_path)
-      key = this_path.sub(pre, '')
-      object = bucket.objects[key].write(Pathname.new(this_path))
-    end
-    redirect_to user_sheet_path
-  end
-
 
   private
 
@@ -155,14 +145,52 @@ class SheetsController < ApplicationController
     @user.sheets.find(params[:id])
   end
 
+  def find_local_path
+    path = "#{Rails.root}/tmp/s3/#{@user.id}/#{@sheet.id}"
+  end
+
+  def find_upload_folder
+    folder = "uploads/#{@sheet.id}.git"
+  end
+
+  def find_s3_url
+    s3_url = "amazon-s3://.jgit@#{S3_BUCKET}/#{find_upload_folder}"
+  end
+
   def sheet_params
     params.require(:sheet).permit(:path)
   end
 
-  def destroy_s3_file(uploader)
+  def destroy_s3_object
     s3     = AWS::S3.new
-    bucket = s3.buckets[uploader.fog_directory]
-    object = bucket.objects[@sheet.path]
-    object.delete
+    bucket = s3.buckets[S3_BUCKET]
+    bucket.objects.with_prefix(find_upload_folder).delete_all
+  end
+
+  def push(local_repo_path)
+    push = "#{Rails.root}/bin/jgit --git-dir=#{local_repo_path}/.git push"
+    IO.popen(push) { |result| puts result.gets }
+  end
+
+  def create_local_repo
+    path = find_local_path
+    file = "#{path}/data.json"
+    FileUtils.mkdir_p(path)
+    FileUtils.touch(file)
+    git = Git::init(path)
+    git.add
+    message = 'message: ' + Time.now.to_s
+    git.commit_all(message)
+    remote = git.add_remote("origin", find_s3_url)
+    push(path)
+  end
+
+  def update_local_repo
+    path = find_local_path
+    fetch = "#{Rails.root}/bin/jgit --git-dir=#{path}/.git fetch"
+    IO.popen(fetch) { |result| puts result.gets }
+    # TODO: do merge if any result then
+    git = Git::init(path)
+    git.merge('origin/master')
   end
 end
