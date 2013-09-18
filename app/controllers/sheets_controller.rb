@@ -48,6 +48,7 @@ class SheetsController < ApplicationController
 
   def destroy
     @sheet = find_sheet
+    destory_local_tmp_file
     destroy_s3_object
     @sheet.destroy
     redirect_to user_sheets_path
@@ -153,6 +154,10 @@ class SheetsController < ApplicationController
     s3     = AWS::S3.new
     bucket = s3.buckets[S3_BUCKET]
     bucket.objects.with_prefix(find_upload_folder).delete_all
+  end
+
+  def destory_local_tmp_file
+    FileUtils.remove_entry(find_local_path, :force => true)
   end
 
   def push(local_repo_path)
