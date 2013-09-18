@@ -21,7 +21,7 @@ class SheetsController < ApplicationController
   end
 
   def create
-    @sheet = @user.sheets.new(sheet_params)
+    @sheet = @user.sheets.new(sheet_name)
 
     if @sheet.save
       redirect_to user_sheets_path
@@ -32,14 +32,13 @@ class SheetsController < ApplicationController
   end
 
   def edit
-    #TODO: This won't be opened for general user in real production in the future
     @sheet = find_sheet
   end
 
   def update
     @sheet = find_sheet
 
-    if @sheet.update(sheet_params)
+    if @sheet.update(sheet_name)
       redirect_to user_sheet_path
     else
       render :edit
@@ -57,7 +56,6 @@ class SheetsController < ApplicationController
   def upload
     @sheet = find_sheet
     push(find_local_path)
-    @sheet.update(:path => find_upload_folder)
     redirect_to user_sheet_path
   end
 
@@ -146,8 +144,8 @@ class SheetsController < ApplicationController
     s3_url = "amazon-s3://.jgit@#{S3_BUCKET}/#{find_upload_folder}"
   end
 
-  def sheet_params
-    params.require(:sheet).permit(:path)
+  def sheet_name
+    params.require(:sheet).permit(:name)
   end
 
   def destroy_s3_object

@@ -4,14 +4,14 @@
     &nbsp;
   </div>
   <h3> <%= @user.email %> </h3>
-  <p> <%= "Total #{@user.sheets.size} sheets" %> </p>
+  <p> <%= "Total #{@sheets.size} sheets" %> </p>
   <table class="table">
     <tbody>
       <% @sheets.each do |sheet| %>
         <tr>
-          <td> <%= link_to(sheet.path, user_sheet_path(sheet.user, sheet)) %> </td>
+          <td> <%= link_to(sheet.name, user_sheet_path(sheet.user, sheet)) %> </td>
           <td> 
-            <%= link_to("Edit", edit_user_sheet_path(sheet.user, sheet),
+            <%= link_to("Rename", edit_user_sheet_path(sheet.user, sheet),
               :class => "btn btnbtn-mini btn-primary") %>
             <%= link_to("Delete", user_sheet_path(sheet.user, sheet),
               :class   => "btn btnbtn-mini btn-warning",
