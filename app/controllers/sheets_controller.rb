@@ -3,6 +3,7 @@ class SheetsController < ApplicationController
   before_action :find_user
 
   S3_BUCKET = 'gito_user_repo'
+  DATA_FILE = 'data.json'
 
   def index
     @sheets = @user.sheets.all
@@ -98,6 +99,7 @@ class SheetsController < ApplicationController
         ["20100", 30, 15, 12, 13],
         ["20100", 30, 15, 12, 13],
       ]
+    @sheetdata = sheet_data_convert(JSON.parse(File.read("#{find_local_path}/#{DATA_FILE}")))
     data = {"data" => @sheetdata}
     respond_to do |format|
       format.json  { render :json => data }
@@ -114,7 +116,9 @@ class SheetsController < ApplicationController
 
       @sheet = find_sheet
       path = find_local_path
-      file = "#{path}/data.json"
+      file = "#{path}/#{DATA_FILE}"
+
+      clone_s3 unless File.exist?(file)
 
       File.open(file, 'w') do |f|
         f.write(JSON.pretty_generate(sheetdata.as_json))
@@ -174,7 +178,7 @@ class SheetsController < ApplicationController
 
   def create_local_repo
     path = find_local_path
-    file = "#{path}/data.json"
+    file = "#{path}/#{DATA_FILE}"
     FileUtils.mkdir_p(path)
     FileUtils.touch(file)
     git = Git::init(path)
@@ -192,5 +196,18 @@ class SheetsController < ApplicationController
     # TODO: do merge if any result then
     git = Git::init(path)
     git.merge('origin/master')
+  end
+
+  def clone_s3
+    clone = "#{Rails.root}/bin/jgit clone #{find_s3_url} #{find_local_path}"
+    IO.popen(clone) { |result| puts result.gets }
+  end
+
+  def sheet_data_convert(json_hash)
+    data = []
+    json_hash.each do |key, value|
+      data[key.to_i] = value
+    end
+    return data
   end
 end
