@@ -108,7 +108,8 @@ class SheetsController < ApplicationController
 
       begin
         message = 'message: ' + Time.now.to_s
-        git.commit_all(message)
+        #TODO: ohmygod should be user name
+        git.commit_all(message, :author => "ohmygod <#{@user.email}>")
       rescue
         puts 'nothing to commit'
       end
@@ -206,5 +207,7 @@ class SheetsController < ApplicationController
         File.read(file)
       )
     )
+    git = Git::init(find_local_path)
+    @commits = git.log
   end
 end

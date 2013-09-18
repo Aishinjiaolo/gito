@@ -35,8 +35,19 @@
     Load
   </button>
 
-  <%= link_to("Upload", upload_user_sheet_path(@sheet.user, @sheet),
+  <%= link_to("Push", upload_user_sheet_path(@sheet.user, @sheet),
               :class => "btn btn-mini btn-primary", :title => "upload data") %>
-  <%= link_to("Update", pull_user_sheet_path(@sheet.user, @sheet),
+  <%= link_to("Pull", pull_user_sheet_path(@sheet.user, @sheet),
               :class => "btn btn-mini btn-primary", :title => "update data") %>
+
+  <h3> This is your history </h3>
+  <table class="table">
+    <tbody>
+      <% @commits.each do |commit| %>
+        <tr>
+          <td> <%= commit.message %> </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
