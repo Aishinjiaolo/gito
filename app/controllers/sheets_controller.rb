@@ -133,6 +133,10 @@ class SheetsController < ApplicationController
     path = "#{Rails.root}/tmp/s3/#{@user.id}/#{@sheet.id}"
   end
 
+  def find_data_template_file
+    file = "#{Rails.root}/app/assets/data_template/#{DATA_FILE}"
+  end
+
   def find_upload_folder
     folder = "uploads/#{@sheet.id}.git"
   end
@@ -160,7 +164,7 @@ class SheetsController < ApplicationController
     path = find_local_path
     file = "#{path}/#{DATA_FILE}"
     FileUtils.mkdir_p(path)
-    FileUtils.touch(file)
+    FileUtils.copy(find_data_template_file, file)
     git = Git::init(path)
     git.add
     message = 'message: ' + Time.now.to_s
