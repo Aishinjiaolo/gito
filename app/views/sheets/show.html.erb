@@ -43,14 +43,11 @@
   </button>
 
   <div id="hide_save" class="hide_save">
-      <a class="b-close">x</a>
-      <h3> Leave comment before you save </h3>
-      <%= simple_form_for [@user, @sheet] do |f| %>
-        <%= f.input :name, :input_html => { :class => "input-lg"} %>
-        <div class="form-actions">
-          <%= f.submit "Submit", :disable_with => 'Submiting...', :name => "save", :class => "btn btn-primary", :title => "save data" %>
-        </div>
-      <% end %>
+    <a class="b-close">x</a>
+    <h3> Leave comment before you save </h3>
+    <button name="save" class="btn btn-mini btn-primary" title="save data">
+      Submit
+    </button>
   </div>
 
   <h3> This is your history </h3>

@@ -52,10 +52,10 @@ $(document).ready(function() {
     });
   });
 
-  $parent.find('input[name=save]').click(function () {
+  $parent.find('button[name=save]').click(function () {
     $.ajax({
       url: <%= raw @save_url.to_json %>,
-      data: {"data": dataTable.data('handsontable').getData()}, //returns all cells' data
+      data: {"data": dataTable.data('handsontable').getData()},
       dataType: 'json',
       type: 'POST',
       success: function (res) {
@@ -69,8 +69,6 @@ $(document).ready(function() {
       },
       error: function (xhr, status, error) {
         console.log('Save error. This url is not accessable.');
-        var err = eval("(" + xhr.responseText + ")");
-        alert(err.Message);
       }
     });
   });
