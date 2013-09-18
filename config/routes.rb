@@ -3,10 +3,10 @@ Gito::Application.routes.draw do
 
   resources :users do
     resources :sheets do
-      get   'upload', on: :member
-      get   'pull',   on: :member
-      get   'load',   on: :member
-      post  'save',   on: :member
+      get   'upload',    on: :member
+      get   'pull',      on: :member
+      get   'load_data', on: :member
+      post  'save_data', on: :member
     end
   end
 

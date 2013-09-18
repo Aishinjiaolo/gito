@@ -15,19 +15,9 @@ class SheetsController < ApplicationController
 
   def show
     @sheet = find_sheet
-    @load_url = "#{@sheet.id}/load"
-    @save_url = "#{@sheet.id}/save"
-    @sheetdata =
-      [
-        ["", "Kia", "Nissan", "Toyota", "Honda"],
-        ["2008", 10, 11, 12, 13],
-        ["2009", 20, 11, 14, 13],
-        ["2010", 30, 15, 12, 13],
-        ["2010", 30, 15, 12, 13],
-        ["2010", 30, 15, 12, 13],
-        ["2010", 30, 15, 12, 13],
-        ["2010", 30, 15, 12, 13],
-      ]
+    @load_url = "#{@sheet.id}/load_data"
+    @save_url = "#{@sheet.id}/save_data"
+    load_local_data
   end
 
   def create
@@ -87,26 +77,16 @@ class SheetsController < ApplicationController
     end
   end
 
-  def load
-    @sheetdata =
-      [
-        ["", "Kia", "Nissan", "Toyota", "Honda"],
-        ["20080", 10, 11, 12, 13],
-        ["20090", 20, 11, 14, 13],
-        ["20100", 30, 15, 12, 13],
-        ["20100", 30, 15, 12, 13],
-        ["20100", 30, 15, 12, 13],
-        ["20100", 30, 15, 12, 13],
-        ["20100", 30, 15, 12, 13],
-      ]
-    @sheetdata = sheet_data_convert(JSON.parse(File.read("#{find_local_path}/#{DATA_FILE}")))
+  def load_data
+    @sheet = find_sheet
+    load_local_data
     data = {"data" => @sheetdata}
     respond_to do |format|
       format.json  { render :json => data }
     end
   end
 
-  def save
+  def save_data
     if params[:data]
       sheetdata = params[:data]
       respond_to do |format|
@@ -209,5 +189,15 @@ class SheetsController < ApplicationController
       data[key.to_i] = value
     end
     return data
+  end
+
+  def load_local_data
+    file = "#{find_local_path}/#{DATA_FILE}"
+    clone_s3 unless File.exist?(file)
+    @sheetdata = sheet_data_convert(
+      JSON.parse(
+        File.read(file)
+      )
+    )
   end
 end
