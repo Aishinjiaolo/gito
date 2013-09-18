@@ -13,3 +13,28 @@
 .handsontable .currentCol {
   background: #faf2cc;
 }
+
+.hide_save {
+  background-color: #fff;
+  border-radius: 15px;
+  color: #000;
+  display:none;
+  padding: 20px;
+  min-width: 600px;
+  min-height: 300px;
+}
+
+.b-close {
+  float: right;
+  cursor: pointer;
+  position: absolute;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  right: 10px;
+  top: 5px;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+}

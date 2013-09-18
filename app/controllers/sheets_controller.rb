@@ -89,8 +89,12 @@ class SheetsController < ApplicationController
     if params[:data]
       sheetdata = params[:data]
       respond_to do |format|
-        format.html  { redirect_to user_sheet_path }
-        format.json  { render :json => { result: 'ok' } }
+        format.json  {
+          render :json => {
+            result: 'ok',
+            location: url_for(:controller => 'sheets', :action => 'show')
+          }
+        }
       end
 
       @sheet = find_sheet

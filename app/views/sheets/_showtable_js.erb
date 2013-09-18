@@ -52,7 +52,7 @@ $(document).ready(function() {
     });
   });
 
-  $parent.find('button[name=save]').click(function () {
+  $parent.find('input[name=save]').click(function () {
     $.ajax({
       url: <%= raw @save_url.to_json %>,
       data: {"data": dataTable.data('handsontable').getData()}, //returns all cells' data
@@ -61,6 +61,7 @@ $(document).ready(function() {
       success: function (res) {
         if (res.result === 'ok') {
           console.log('Data saved');
+          window.location.href = res.location;
         }
         else {
           console.log('Save error.');
@@ -72,13 +73,19 @@ $(document).ready(function() {
     });
   });
 
-  function bindDumpButton() {
+  function bindButton() {
     $('body').on('click', 'button[name=dump]', function () {
       var dump = $(this).data('dump');
       var $container = $(dump);
       console.log('data of ' + dump, $container.handsontable('getData'));
     });
+
+    $('body').on('click', 'button[name=mypopup]', function (e) {
+      e.preventDefault();
+      console.log('popup now');
+      $('#hide_save').bPopup();
+    });
   }
-  bindDumpButton();
+  bindButton();
 });
 </script>
