@@ -10,11 +10,19 @@
     <div class="panel-heading">
       <h3 class="panel-title"> <%= commit_by_date[0].date.strftime("%m-%d-%y") %> </h3>
     </div>
-    <% commit_by_date.each do |commit| %>
     <div class="panel-body">
-      <%= commit.message %>
-    </div>
+    <% commit_by_date.each do |commit| %>
+    <ul class="list-group">
+      <%= link_to '#', :class => "list-group-item" do %>
+        <%= holder_tag '40x40', 'user', 'industrial', :class => "pull-left margin_r_10" %>
+        <h4 class="list-group-item-heading"> <%= commit.message %> </h4>
+        <p class="list-group-item-text">
+          <%= "#{commit.committer.name} authored on #{commit.date}" %>
+        </p>
+      <% end %>
+    </ul>
     <% end %>
+    </div>
   </div>
   <% end %>
 </div>

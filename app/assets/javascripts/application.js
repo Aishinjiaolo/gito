@@ -6,3 +6,4 @@
 //= require bootstrap
 //= require jquery.handsontable.full
 //= require jquery.bpopup
+//= require holder
