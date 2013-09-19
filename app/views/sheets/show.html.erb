@@ -3,6 +3,9 @@
     <%= link_to("New Sheet", new_user_sheet_path(@user) , :class => "btn btn-mini btn-primary")%>
     &nbsp;
   </div>
+  <h3>
+      <%= link_to('All', user_sheets_path(@sheet.user, @sheet)) %> / <%= @sheet.name %>
+  </h3>
   <h3> <%= "\'#{@user.email}\' -> sheet id = \'#{@sheet.id}\'" %> </h3>
   <div class="span12">
     <pre> <%= @sheet.name %> </pre>
@@ -25,7 +28,7 @@
 
   <%= render :partial => "showtable_js" %>
 
-  <button name="dump" data-dump="#dataTable" class="btn btn-mini btn-primary" title="Prints data to Firebug/Chrome Dev Tools">
+  <button name="dump" data-dump="#dataTable" class="btn btn-mini btn-info" title="Prints data to Firebug/Chrome Dev Tools">
     Dump data to console
   </button>
 
@@ -50,14 +53,6 @@
     </button>
   </div>
 
-  <h3> This is your history </h3>
-  <table class="table">
-    <tbody>
-      <% @commits.each do |commit| %>
-        <tr>
-          <td> <%= commit.message %> </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= link_to("History", history_user_sheet_path(@sheet.user, @sheet),
+              :class => "btn btn-mini btn-success", :title => "check history") %>
 </div>

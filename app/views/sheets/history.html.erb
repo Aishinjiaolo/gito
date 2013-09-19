@@ -1,0 +1,20 @@
+<div class="page-header">
+  <h2>
+    <%= link_to('All', user_sheets_path(@sheet.user, @sheet))%> /
+    <%= link_to(@sheet.name, user_sheet_path(@sheet.user, @sheet)) %> / history
+  </h2>
+</div>
+<div class="row">
+  <% @commits.each do |commit_by_date| %>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title"> <%= commit_by_date[0].date.strftime("%m-%d-%y") %> </h3>
+    </div>
+    <% commit_by_date.each do |commit| %>
+    <div class="panel-body">
+      <%= commit.message %>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+</div>

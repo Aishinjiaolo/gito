@@ -3,6 +3,7 @@ Gito::Application.routes.draw do
 
   resources :users do
     resources :sheets do
+      get   'history',   on: :member
       get   'upload',    on: :member
       get   'pull',      on: :member
       get   'load_data', on: :member

@@ -122,6 +122,28 @@ class SheetsController < ApplicationController
     end
   end
 
+  def history
+    @sheet = find_sheet
+    git = Git::init(find_local_path)
+
+    #TODO: this is ugly
+    @commits = []
+    commits_by_day = []
+    this_date = nil
+    git.log.since('one week ago').each do |c|
+      date = c.date.strftime("%m-%d-%y")
+      if this_date == date || this_date == nil
+        commits_by_day << c
+        this_date = date
+      else
+        @commits << commits_by_day
+        commits_by_day = []
+        this_date = date
+      end
+    end
+    @commits << commits_by_day
+  end
+
 
   private
 
@@ -211,7 +233,5 @@ class SheetsController < ApplicationController
         File.read(file)
       )
     )
-    git = Git::init(find_local_path)
-    @commits = git.log
   end
 end
