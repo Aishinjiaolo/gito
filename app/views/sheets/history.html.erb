@@ -8,7 +8,7 @@
   <% @commits.each do |commit_by_date| %>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      <h3 class="panel-title"> <%= commit_by_date[0].date.strftime("%m-%d-%y") %> </h3>
+      <h3 class="panel-title"> <%= commit_by_date[0].date.strftime("%d %b %Y") %> </h3>
     </div>
     <div class="panel-body">
     <% commit_by_date.each do |commit| %>

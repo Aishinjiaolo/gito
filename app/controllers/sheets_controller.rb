@@ -130,6 +130,7 @@ class SheetsController < ApplicationController
     @commits = []
     commits_by_day = []
     this_date = nil
+    #TODO: only in a week, more on separation page
     git.log.since('one week ago').each do |c|
       date = c.date.strftime("%m-%d-%y")
       if this_date == date || this_date == nil
