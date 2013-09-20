@@ -17,7 +17,7 @@
         <%= holder_tag '40x40', 'user', 'industrial', :class => "pull-left margin_r_10" %>
         <h4 class="list-group-item-heading"> <%= commit.message %> </h4>
         <p class="list-group-item-text">
-          <%= "#{commit.committer.name} authored on #{commit.date}" %>
+          <%= "#{commit.author.name} authored on #{commit.date}" %>
         </p>
       <% end %>
     </ul>

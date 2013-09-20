@@ -128,8 +128,8 @@ class SheetsController < ApplicationController
     git = Git::init(find_local_path)
 
     #TODO: this is ugly
-    @commits = []
-    commits_by_day = []
+    @commits = Array.new
+    commits_by_day = Array.new
     this_date = nil
     #TODO: only in a week, more on separation page
     git.log.since('one week ago').each do |c|
@@ -139,11 +139,11 @@ class SheetsController < ApplicationController
         this_date = date
       else
         @commits << commits_by_day
-        commits_by_day = []
+        commits_by_day = Array.new
         this_date = date
       end
     end
-    @commits << commits_by_day
+    @commits << commits_by_day unless commits_by_day.empty?
   end
 
 
