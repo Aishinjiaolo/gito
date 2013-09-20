@@ -3,7 +3,7 @@
   <%= simple_form_for [@user, @sheet] do |f| %>
     <%= f.input :name, :input_html => { :class => "input-lg"} %>
     <div class="form-actions">
-      <%= f.submit "Submit", :disable_with => 'Submiting...', :class => "btn btn-primary" %>
+      <%= f.submit "Submit", :data => {:disable_with => 'Submiting...'}, :class => "btn btn-primary" %>
     </div>
   <% end %>
 </div>

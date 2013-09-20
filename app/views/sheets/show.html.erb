@@ -15,7 +15,7 @@
         <%= link_to("Delete", user_sheet_path(@sheet.user, @sheet),
           :class   => "btn btn-mini btn-warning",
           :method  => :delete,
-          :confirm => "Areyousure?") %>
+          :data    => { :confirm => "Areyousure?" }) %>
       </div>
   </div>
 
@@ -48,9 +48,14 @@
   <div id="hide_save" class="hide_save">
     <a class="b-close">x</a>
     <h3> Leave comment before you save </h3>
-    <button name="save" class="btn btn-mini btn-primary" title="save data">
-      Submit
-    </button>
+    <%= simple_form_for [@user, @sheet] do |f| %>
+      <%= f.text_area :commit, :id => "commit", :rows => 5, :class => "input-lg full-textarea" %>
+      <div class="form-actions margin_t_10">
+        <button name="save" class="btn btn-primary btn-block" title="save data" data-disable-with="Submiting...">
+          Submit
+        </button>
+      </div>
+    <% end %>
   </div>
 
   <%= link_to("History", history_user_sheet_path(@sheet.user, @sheet),

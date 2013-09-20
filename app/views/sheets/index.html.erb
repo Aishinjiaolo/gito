@@ -16,7 +16,7 @@
             <%= link_to("Delete", user_sheet_path(sheet.user, sheet),
               :class   => "btn btnbtn-mini btn-warning",
               :method  => :delete,
-              :confirm => "Areyousure?") %>
+              :data    => { :confirm => "Areyousure?" }) %>
           </td>
         </tr>
       <% end %>

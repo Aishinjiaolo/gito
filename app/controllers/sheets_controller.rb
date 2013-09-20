@@ -110,8 +110,9 @@ class SheetsController < ApplicationController
       git = Git::init(path)
       git.add
 
+      message = params[:commit].to_s
+      message = message.size > 0 ? message : 'no comment'
       begin
-        message = 'message: ' + Time.now.to_s
         #TODO: ohmygod should be user name
         git.commit_all(message, :author => "ohmygod <#{@user.email}>")
       rescue

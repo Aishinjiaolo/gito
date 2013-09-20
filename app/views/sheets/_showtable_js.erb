@@ -55,7 +55,8 @@ $(document).ready(function() {
   $parent.find('button[name=save]').click(function () {
     $.ajax({
       url: <%= raw @save_url.to_json %>,
-      data: {"data": dataTable.data('handsontable').getData()},
+      data: {"data": dataTable.data('handsontable').getData(),
+             "commit": $("#commit").val()},
       dataType: 'json',
       type: 'POST',
       success: function (res) {
@@ -71,6 +72,8 @@ $(document).ready(function() {
         console.log('Save error. This url is not accessable.');
       }
     });
+    $(this).hide();
+    $(this).after('<button class="btn btn-disable btn-block" title="save data" data-disable-with="Submiting..." />');
   });
 
   function bindButton() {

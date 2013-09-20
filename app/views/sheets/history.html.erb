@@ -1,8 +1,8 @@
 <div class="page-header">
-  <h2>
+  <h3>
     <%= link_to('All', user_sheets_path(@sheet.user, @sheet))%> /
     <%= link_to(@sheet.name, user_sheet_path(@sheet.user, @sheet)) %> / history
-  </h2>
+  </h3>
 </div>
 <div class="row">
   <% @commits.each do |commit_by_date| %>
