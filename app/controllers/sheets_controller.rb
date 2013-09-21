@@ -6,7 +6,7 @@ class SheetsController < ApplicationController
   DATA_FILE = 'data.json'
 
   def index
-    @sheets = @user.sheets.all
+    @sheets = @user.sheets.load
   end
 
   def new
@@ -113,8 +113,8 @@ class SheetsController < ApplicationController
       message = params[:commit].to_s
       message = message.size > 0 ? message : 'no comment'
       begin
-        #TODO: ohmygod should be user name
-        git.commit_all(message, :author => "ohmygod <#{@user.email}>")
+        username = @user.name.size > 0 ? @user.name : 'ohmygod'
+        git.commit_all(message, :author => "#{username} <#{@user.email}>")
       rescue
         Rails.logger.info 'nothing to commit'
       end
@@ -140,10 +140,11 @@ class SheetsController < ApplicationController
       else
         @commits << commits_by_day
         commits_by_day = Array.new
+        commits_by_day << c
         this_date = date
       end
     end
-    @commits << commits_by_day unless commits_by_day.empty?
+    @commits << commits_by_day
   end
 
 
@@ -199,8 +200,9 @@ class SheetsController < ApplicationController
     FileUtils.copy(find_data_template_file, file)
     git = Git::init(path)
     git.add
-    message = 'message: ' + Time.now.to_s
-    git.commit_all(message)
+    message = 'first commit'
+    username = @user.name.size > 0 ? @user.name : 'ohmygod'
+    git.commit_all(message, :author => "#{username} <#{@user.email}>")
     remote = git.add_remote("origin", find_s3_url)
     push(path)
   end

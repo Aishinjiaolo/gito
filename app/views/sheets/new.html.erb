@@ -1,7 +1,7 @@
 <div class="span12">
   <h3> Give your table a new name </h3>
   <%= simple_form_for [@user, @sheet] do |f| %>
-    <%= f.input :name, :input_html => { :class => "input-lg"} %>
+    <%= f.input :name, :hint => "no whitespace allowed", :input_html => { :class => "input-lg"} %>
     <div class="form-actions">
       <%= f.submit "Submit", :data => {:disable_with => 'Submiting...'}, :class => "btn btn-primary" %>
     </div>
