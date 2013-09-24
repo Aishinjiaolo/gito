@@ -4,6 +4,10 @@
     <%= link_to(@sheet.name, user_sheet_path(@sheet.user, @sheet)) %> / history
   </h3>
 </div>
+
+<%= javascript_include_tag "application" %>
+<%= render :partial => "showhistory_js" %>
+
 <div class="row">
   <% @commits.each do |commit_by_date| %>
   <div class="panel panel-primary">
@@ -13,14 +17,19 @@
     <div class="panel-body">
     <% commit_by_date.each do |commit| %>
     <ul class="list-group">
-      <%= link_to '#', :class => "list-group-item" do %>
+      <%= link_to '#', :class => "list-group-item", :name => "#{commit.sha}" do %>
         <%= holder_tag '40x40', 'user', 'industrial', :class => "pull-left margin_r_10" %>
-        <h4 class="list-group-item-heading"> <%= commit.message %> </h4>
+        <h4 class="list-group-item-heading"> <%= commit.message.split(/\n/)[0] %> </h4>
         <p class="list-group-item-text">
           <%= "#{commit.author.name} authored on #{commit.date}" %>
         </p>
       <% end %>
     </ul>
+    <div id=<%= raw "\"#{commit.sha}\"" %> class="hide_commit">
+      <a class="b-close">x</a>
+      <h3> show this commit full log here </h3>
+      <h4> <%= simple_format commit.message %> </h4>
+    </div>
     <% end %>
     </div>
   </div>

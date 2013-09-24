@@ -1,0 +1,16 @@
+<script>
+$(document).ready(function() {
+  function bindButton() {
+    <% @commits.each do |commit_by_date| %>
+      <% commit_by_date.each do |c| %>
+        $('body').on('click', <%= raw "\'a[name=#{c.sha}]\'" %>, function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+          <%= raw "$(\'\##{c.sha}\').bPopup();" %>
+        });
+      <% end %>
+    <% end%>
+  };
+  bindButton();
+});
+</script>

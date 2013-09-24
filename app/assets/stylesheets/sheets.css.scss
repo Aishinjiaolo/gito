@@ -26,6 +26,16 @@
   min-height: 300px;
 }
 
+.hide_commit {
+  background-color: #fff;
+  border-radius: 15px;
+  color: #000;
+  display:none;
+  padding: 20px;
+  min-width: 800px;
+  min-height: 500px;
+}
+
 .b-close {
   float: right;
   cursor: pointer;
