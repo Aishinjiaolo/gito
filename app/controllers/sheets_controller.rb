@@ -144,6 +144,11 @@ class SheetsController < ApplicationController
       end
     end
     @commits << commits_by_day
+
+    @diffs = Array.new
+    @commits.flatten.each do |c|
+      @diffs << git.diff(c.parent, c).to_s.split(/\n/).drop(4).join("\n") if c.parent
+    end
   end
 
 

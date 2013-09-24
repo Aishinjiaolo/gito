@@ -26,9 +26,15 @@
       <% end %>
     </ul>
     <div id=<%= raw "\"#{commit.sha}\"" %> class="hide_commit">
-      <a class="b-close">x</a>
-      <h3> show this commit full log here </h3>
-      <h4> <%= simple_format commit.message %> </h4>
+      <a class="b-close"> x </a>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h2 class="panel-title"> show this commit full log here </h2>
+        </div>
+        <div class="panel-body height500">
+          <p> <%= simple_format @diffs.shift %> </p>
+        </div>
+      </div>
     </div>
     <% end %>
     </div>
