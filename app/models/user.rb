@@ -8,10 +8,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
-  validates :name,
-    :uniqueness => {
-      :case_sensitive => false
-  }
+  validates :name, presence: true
+  validates :name, uniqueness: true, if: -> { self.name.present? }
 
   has_many :sheets
 end

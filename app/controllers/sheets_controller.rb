@@ -113,8 +113,7 @@ class SheetsController < ApplicationController
       message = params[:commit].to_s
       message = message.size > 0 ? message : 'no comment'
       begin
-        username = @user.name.size > 0 ? @user.name : 'ohmygod'
-        git.commit_all(message, :author => "#{username} <#{@user.email}>")
+        git.commit_all(message, :author => "#{@user.name} <#{@user.email}>")
       rescue
         Rails.logger.info 'nothing to commit'
       end
@@ -201,8 +200,7 @@ class SheetsController < ApplicationController
     git = Git::init(path)
     git.add
     message = 'first commit'
-    username = @user.name.size > 0 ? @user.name : 'ohmygod'
-    git.commit_all(message, :author => "#{username} <#{@user.email}>")
+    git.commit_all(message, :author => "#{@user.name} <#{@user.email}>")
     remote = git.add_remote("origin", find_s3_url)
     push(path)
   end
