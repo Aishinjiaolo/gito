@@ -24,7 +24,9 @@
   <%= javascript_include_tag "application" %>
 
   <input id="search_field" type="text" placeholder="Search"> </input>
-  <div id="dataTable", class="handsontable"> </div>
+  <button name="undo" class="btn btn-warning"> Undo </button>
+  <button name="redo" class="btn btn-info"> Redo </button>
+  <div id="dataTable", class="handsontable margin10"> </div>
 
   <%= render :partial => "showtable_js" %>
 

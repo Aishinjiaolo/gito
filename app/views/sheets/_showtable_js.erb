@@ -11,8 +11,8 @@ $(document).ready(function() {
     colHeaders: true,
     manualColumnResize: true,
     contextMenu: true,
-    currentRowClassName: 'currentRow',
-    currentColClassName: 'currentCol',
+    //currentRowClassName: 'currentRow',
+    //currentColClassName: 'currentCol',
     persistentState: true,
   });
   
@@ -36,6 +36,14 @@ $(document).ready(function() {
   });
 
   var $parent = dataTable.parent();
+
+  $parent.find('button[name=undo]').click(function () {
+    dataTable.handsontable('undo');
+  });
+
+  $parent.find('button[name=redo]').click(function () {
+    dataTable.handsontable('redo');
+  });
 
   $parent.find('button[name=load]').click(function () {
     $.ajax({
